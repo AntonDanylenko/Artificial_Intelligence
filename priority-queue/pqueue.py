@@ -40,17 +40,21 @@ class PQueue:
         while(index*2<self.length):
           #print("index: " + str(index))
           if (index*2+1<self.length):
-            if (self.cmpfunc(self.queue[index*2],self.queue[index*2+1])==-1):
+            if (self.cmpfunc(self.queue[index],self.queue[index*2+1])==1 and
+                self.cmpfunc(self.queue[index*2+1],self.queue[index*2])==-1):
+              self.switch(index, index*2+1)
+              index = index*2+1
+            elif (self.cmpfunc(self.queue[index],self.queue[index*2])==1):
               self.switch(index, index*2)
               index = index*2
             else:
-              self.switch(index, index*2+1)
-              index = index*2+1
-          else:
+              index = self.length
+          elif (self.cmpfunc(self.queue[index],self.queue[index*2])==1):
             #print("index: " + str(index))
-            if (self.cmpfunc(self.queue[index],self.queue[index*2])==1):
-              self.switch(index, index*2)
+            self.switch(index, index*2)
             index = index*2
+          else:
+            index = self.length
       else:
         self.queue[1] = None
         self.length-=1
