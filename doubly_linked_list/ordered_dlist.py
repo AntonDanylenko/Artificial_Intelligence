@@ -15,13 +15,22 @@ class Dlist:
             self.last = self.first
         else:
             element = self.first
-            while element.next!=None and element.value<value:
-                element = element.next
-            new = Node(value)
-            element.next.previous = new
-            new.next = element.next
-            element.next = new
-            new.previous = element
+            if value<element.value:
+                element.next = self.first
+                self.first.previous = element
+                self.first = element
+            else:
+                while element.next!=None and element.value<value:
+                    element = element.next
+                new = Node(value)
+                if element.next==None:
+                    element.next = new
+                    self.last = new
+                    
+                element.next.previous = new
+                new.next = element.next
+                element.next = new
+                new.previous = element
 
     def delete(self,value):
         element = self.first
