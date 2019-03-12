@@ -1,4 +1,5 @@
 import sys
+#import time
 
 def read_dictall():
     dict_f = open("dictall.txt", "r")
@@ -44,7 +45,9 @@ def write_output(array):
 def main():
     requests = read_input()
     words = read_dictall()
+    #start = time.time()
     answers = find_num_nbors(requests, words)
+    #print(str(time.time() - start))
     write_output(answers)
     #print(words)
 
