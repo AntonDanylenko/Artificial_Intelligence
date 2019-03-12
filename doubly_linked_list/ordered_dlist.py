@@ -80,5 +80,16 @@ def main():
     dlist.insert(6)
     dlist.insert(1)
     print(dlist.tolist())
+    dlist.delete(3)
+    dlist.delete(9)
+    dlist.delete(12)
+    dlist.delete(0)
+    print(dlist.tolist())
 
 main()
+def insert_all(the_dlist, the_input_list):
+  for element in the_input_list:
+    the_dlist.insert(element)
+a = Dlist()
+insert_all(a,[4,5,2,3,2,7])
+print(a.tolist())
