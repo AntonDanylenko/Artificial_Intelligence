@@ -1,4 +1,23 @@
 #! /usr/bin/python3
+import sys
+
+def committee_sort():
+    f = open(sys.argv[1], 'r')
+    f_read = f.read()
+    lines = f_read.split('\n')
+    f.close()
+    lines2d = []
+    for x in range(len(lines)):
+        lines2d.append(lines[x].split(','))
+    lines_sorted = []
+    print(lines2d)
+    for x in range(len(lines)):
+        if len(lines2d[x]) > 1 and lines2d[x][1]!='':
+            lines_sorted.append(lines2d[x][0] + ',' + ','.join(sorted(lines2d[x][1:])))
+    lines_sorted.sort()
+    f = open(sys.argv[2],'w')
+    f.write('\n'.join(lines_sorted))
+    f.close()
 
 class Node:
     def __init__(self,value):
@@ -87,11 +106,6 @@ def main():
     dlist.delete(12)
     dlist.delete(0)
     print(dlist.tolist())
+    committee_sort()
 
 main()
-def insert_all(the_dlist, the_input_list):
-  for element in the_input_list:
-    the_dlist.insert(element)
-a = Dlist()
-insert_all(a,[4,5,2,3,2,7])
-print(a.tolist())
