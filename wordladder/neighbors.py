@@ -22,11 +22,11 @@ def read_input():
 
 def find_num_nbors(requests, words):
     result = []
+    subdict = []
+    for i in range(len(words)):
+        if len(words[i])==4:
+            subdict.append(words[i])
     for x in range(len(requests)):
-        subdict = []
-        for i in range(len(words)):
-            if len(words[i])==len(requests[x]):
-                subdict.append(words[i])
         nbors = []
         for i in range(len(subdict)):
             num_equal = 0
