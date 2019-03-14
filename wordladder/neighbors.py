@@ -7,7 +7,11 @@ def read_dictall():
     dict_f = open("dictall.txt", "r")
     dict_f_cont = dict_f.read()
     words = dict_f_cont.split('\n')
-    return words
+    subdict = set()
+    for i in range(len(words)):
+        if len(words[i])==4:
+            subdict+=words[i]
+    return subdict
 
 def read_input():
     req_f = open(sys.argv[1], "r")
@@ -20,12 +24,13 @@ def read_input():
         index-=1
     return requests
 
-def find_num_nbors(requests, words):
+def makeDict(length, subdict):
+    result = {}
+    for x in range(len(subdict)):
+
+def find_num_nbors(requests, subdict):
+    makeDict(len(subdict), subdict)
     result = []
-    subdict = []
-    for i in range(len(words)):
-        if len(words[i])==4:
-            subdict.append(words[i])
     for x in range(len(requests)):
         nbors = []
         for i in range(len(subdict)):
