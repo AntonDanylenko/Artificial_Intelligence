@@ -10,7 +10,7 @@ def read_dictall():
     subdict = set()
     for i in range(len(words)):
         if len(words[i])==4:
-            subdict+=words[i]
+            subdict.add(words[i])
     return subdict
 
 def read_input():
@@ -24,23 +24,25 @@ def read_input():
         index-=1
     return requests
 
-def makeDict(length, subdict):
+def makeDict(subdict):
     result = {}
-    for x in range(len(subdict)):
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    for x in subdict:
+        result[x] = []
+        word = x
+        for i in range(len(x)):
+            for s in alphabet:
+                word = x[:i] + s + x[i+1:]
+                if word in subdict and word != x:
+                    result[x].append(word)
+    #print(result)
+    return result
 
 def find_num_nbors(requests, subdict):
-    makeDict(len(subdict), subdict)
+    nbors = makeDict(subdict)
     result = []
     for x in range(len(requests)):
-        nbors = []
-        for i in range(len(subdict)):
-            num_equal = 0
-            for s in range(len(requests[x])):
-                if subdict[i][s]==requests[x][s]:
-                    num_equal+=1
-            if num_equal==len(requests[x])-1:
-                nbors.append(subdict[i])
-        result.append([requests[x],len(nbors)])
+        result.append([requests[x],len(nbors[requests[x]])])
     return result
 
 def write_output(array):
