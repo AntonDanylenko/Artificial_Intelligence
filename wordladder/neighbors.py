@@ -1,7 +1,6 @@
 #! /usr/bin/python3
 
 import sys
-#import time
 
 def read_dictall():
     dict_f = open("dictall.txt", "r")

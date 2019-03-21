@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 
+import sys
 import math
 
 class Node:
@@ -138,9 +139,9 @@ class BinTree:
         return depth
 
 
-def Process(infilename, outfilename):
+def process(infilename, outfilename):
   try:
-    f=open(infilename,'rU')
+    f=open(infilename,'r')
     lines = f.read().split('\n')
     f.close()
   except:
@@ -150,8 +151,7 @@ def Process(infilename, outfilename):
   input_ints = [int(x) for x in input_words]
   tree = BinTree(input_ints)
   find_words = lines[1].split(',')
-  find_ints = [int(x) for x in find_words]
-  output = ','.join(find_ints)
+  output = ','.join(find_words)
   try:
     f.open(outfilename,'w')
     f.write(output + "\n")
@@ -161,7 +161,7 @@ def Process(infilename, outfilename):
     return
   return
 
-tree = BinTree([5,2,4,2,10,8,1,16,5,1])
+'''tree = BinTree([5,2,4,2,10,8,1,16,5,1])
 avg_sum = 0
 for n in [4,8,7,5,16,1,9,2,10]:
   print("Has " + str(n) + "? " + str(tree.has(n)))
@@ -170,4 +170,6 @@ for n in [4,8,7,5,16,1,9,2,10]:
 print("avg: " + str(avg_sum/9))
 print(math.log(7,2))
 print(tree.get_ordered_list())
-tree.clear()
+tree.clear()'''
+
+process(sys.argv[1], sys.argv[2])
