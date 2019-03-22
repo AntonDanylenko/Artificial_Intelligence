@@ -41,30 +41,62 @@ def write_output(array):
         ans_f.write(array[x][0] + ',' + str(array[x][1]) + '\n')
     ans_f.close()
 
+class PriorityQueue(object):
+    def __init__(self):
+        self.queue = []
+
+    def __str__(self):
+        return ' '.join([str(i) for i in self.queue])
+
+    # for checking if the queue is empty
+    def isEmpty(self):
+        return len(self.queue) == []
+
+    # for inserting an element in the queue
+    def insert(self, data):
+        self.queue.append(data)
+
+    # for popping an element based on Priority
+    def delete(self):
+        try:
+            max = 0
+            for i in range(len(self.queue)):
+                if self.queue[i] > self.queue[max]:
+                    max = i
+            item = self.queue[max]
+            del self.queue[max]
+            return item
+        except IndexError:
+            print()
+            exit()
+
 class Node:
     def __init__(self, value):
         self.word = value
-        self.dist = Null
-        self.path = Null
+        self.dist = NULL
+        self.path = []
 
-def my_cmp(string1, string2):
-    for x in range(len(string1)):
-        if string1[x]!=string2[x]:
+def my_cmp(node1, node2):
+    for x in range(len(node1.word)):
+        if node1.word[x]!=node2.word[x]:
             return False
     return True
 
 def search(input):
     nbors = makeDict()
     #print(nbors)
+    output = ""
     for x in input:
         explored = []
-        frontier = []
-        unexplored = []
-        unexplored.append(x.split(',')[0])
-        frontier.append(unexplored[0])
-        current = frontier[0]
-        while !my_cmp(current, x.split(',')[1]):
-            
+        frontier = PriorityQueue()
+        frontier.append(Node(x.split(',')[0]))
+        current = frontier.delete()
+        for x in nbors[current.word]:
+            frontier.insert(Node(x))
+        while !my_cmp(Node(current), Node(x.split(',')[1])):
+
+        output.append(','.join(current.path) + "\n")
+    return output
 
 def main():
     requests = read_input()
