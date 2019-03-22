@@ -150,7 +150,7 @@ def process(infilename, outfilename):
   input_words = lines[0].split(',')
   input_ints = [int(x) for x in input_words]
   tree = BinTree(input_ints)
-  find_words = lines[1].split(',')
+  find_words = int(lines[1]).split(',')
   output = ','.join(find_words)
   try:
     f.open(outfilename,'w')

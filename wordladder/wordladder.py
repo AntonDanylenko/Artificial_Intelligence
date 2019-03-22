@@ -41,15 +41,33 @@ def write_output(array):
         ans_f.write(array[x][0] + ',' + str(array[x][1]) + '\n')
     ans_f.close()
 
-def search():
-    explored = []
-    frontier = []
-    unexplored = []
+class Node:
+    def __init__(self, value):
+        self.word = value
+        self.dist = Null
+        self.path = Null
+
+def my_cmp(string1, string2):
+    for x in range(len(string1)):
+        if string1[x]!=string2[x]:
+            return False
+    return True
+
+def search(input):
     nbors = makeDict()
     #print(nbors)
+    for x in input:
+        explored = []
+        frontier = []
+        unexplored = []
+        unexplored.append(x.split(',')[0])
+        frontier.append(unexplored[0])
+        current = frontier[0]
+        while !my_cmp(current, x.split(',')[1]):
+            
 
 def main():
     requests = read_input()
-    search()
+    search(requests)
 
 main()
