@@ -113,6 +113,7 @@ def search(input):
                 neighbor.h = h(neighbor, target)
                 neighbor.path.append(current.word)
                 frontier.insert(neighbor)
+            print("NBOR LOOP ENDED")
             explored.append(current.word)
             current = frontier.delete()
         output.append(current.word + ',' + ','.join(current.path) + "\n")
