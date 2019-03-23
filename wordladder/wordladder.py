@@ -67,8 +67,7 @@ class PriorityQueue:
             del self.queue[max]
             return item
         except IndexError:
-            print()
-            exit()
+            return None
 
 class Node:
     def __init__(self, value):
