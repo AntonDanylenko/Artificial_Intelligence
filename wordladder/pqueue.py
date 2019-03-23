@@ -12,6 +12,9 @@ class PQueue:
     self.length = 1
     self.cmpfunc = comparator
 
+  def __str__(self):
+    return "[[[" + '\n'.join([str(i) for i in self.queue]) + "]]]"
+
   def switch(self, a, b):
     temp = self.queue[a]
     self.queue[a] = self.queue[b]

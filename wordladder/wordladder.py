@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 import sys
+import pqueue
 
 def makeDict():
     dict_f = open("dictall.txt", "r")
@@ -79,12 +80,6 @@ class Node:
     def __str__(self):
         return self.word + ', ' + str(self.g) + ', ' + str(self.h) + ', ' + ','.join(self.path)
 
-def my_cmp(word1, word2):
-    for x in range(len(word1)):
-        if word1[x]!=word2[x]:
-            return False
-    return True
-
 def g(node_prev):
     return node_prev.g + 1
 
@@ -95,6 +90,11 @@ def h(node, target):
             dist_away+=1
     return dist_away
 
+def my_cmp(a, b):
+    if a.g + a.h < b.g + b.h return -1
+    if a.g + a.h == b.g + b.h return 0
+    return 1
+
 def search(input):
     nbors = makeDict()
     #print(nbors)
@@ -102,9 +102,9 @@ def search(input):
     for x in input:
         target = x.split(',')[1]
         explored = []
-        frontier = PriorityQueue()
-        frontier.insert(Node(x.split(',')[0]))
-        current = frontier.delete()
+        frontier = PQueue(comparator = my_cmp)
+        frontier.push(Node(x.split(',')[0]))
+        current = frontier.pop()
         print("cur word: " + current.word)
         #print("frontier: " + str(frontier))
         while current!=None and current.word != target:
@@ -116,7 +116,7 @@ def search(input):
                     neighbor.h = h(neighbor, target)
                     neighbor.path.extend(current.path)
                     neighbor.path.append(current.word)
-                    frontier.insert(neighbor)
+                    frontier.push(neighbor)
             print("frontier: " + str(frontier))
             #print("NBOR LOOP ENDED")
             explored.append(current.word)
