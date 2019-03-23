@@ -29,12 +29,12 @@ def read_input():
     req_f_cont = req_f.read()
     requests = req_f_cont.split('\n')
     req_f.close()
-    print(requests)
+    #print(requests)
     index = len(requests)-1
     while requests[index]=='':
         del requests[index]
         index-=1
-    print(requests)
+    #print(requests)
     return requests
 
 def write_output(string):
@@ -122,7 +122,7 @@ def search(input):
             explored.append(current.word)
             current = frontier.pop()
         if current!=None:
-            output = output + x.split(',')[0] + ',' + ','.join(current.path) + ',' + current.word + "\n"
+            output = output + ','.join(current.path) + ',' + current.word + "\n"
         else:
             output = output + x.split(',')[0] + ',' + target + '\n'
     return output
