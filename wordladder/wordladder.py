@@ -117,7 +117,7 @@ def search(input):
                     neighbor.path.extend(current.path)
                     neighbor.path.append(current.word)
                     frontier.push(neighbor)
-            print("frontier: " + str(frontier))
+            #print("frontier: " + str(frontier))
             #print("NBOR LOOP ENDED")
             explored.append(current.word)
             current = frontier.pop()
