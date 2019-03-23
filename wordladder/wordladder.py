@@ -104,8 +104,10 @@ def search(input):
         frontier.insert(Node(x.split(',')[0]))
         current = frontier.delete()
         print("cur word: " + current.word)
+        print("frontier: " + frontier)
         while current!=None and current.word != target:
             for x in nbors[current.word]:
+                print(x)
                 neighbor = Node(x)
                 neighbor.g = g(current)
                 neighbor.h = h(neighbor, target)
