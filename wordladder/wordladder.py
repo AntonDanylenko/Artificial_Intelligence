@@ -106,10 +106,10 @@ def search(input):
         print("frontier: " + str(frontier))
         while current!=None and current.word != target:
             #print("cur word: " + current.word)
-            for x in nbors[current.word]:
+            for i in nbors[current.word]:
                 #print(x)
-                if x not in explored:
-                    neighbor = Node(x)
+                if i not in explored:
+                    neighbor = Node(i)
                     neighbor.g = g(current)
                     neighbor.h = h(neighbor, target)
                     neighbor.path.append(current.word)
