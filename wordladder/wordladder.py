@@ -24,7 +24,7 @@ def makeDict():
     return result
 
 def read_input():
-    req_f = open("input.txt", "r")
+    req_f = open(sys.argv[1], "r")
     req_f_cont = req_f.read()
     requests = req_f_cont.split('\n')
     req_f.close()
