@@ -102,10 +102,10 @@ def search(input):
         frontier = PriorityQueue()
         frontier.insert(Node(x.split(',')[0]))
         current = frontier.delete()
-        print("cur word: " + current.word)
+        #print("cur word: " + current.word)
         print("frontier: " + str(frontier))
         while current!=None and current.word != target:
-            print("cur word: " + current.word)
+            #print("cur word: " + current.word)
             for x in nbors[current.word]:
                 #print(x)
                 if x not in explored:
@@ -117,7 +117,10 @@ def search(input):
             #print("NBOR LOOP ENDED")
             explored.append(current.word)
             current = frontier.delete()
-        output = output + current.word + ',' + ','.join(current.path) + "\n"
+        if current!=None:
+            output = output + x.split(',')[0] + ',' + ','.join(current.path) + ',' + current.word + "\n"
+        else:
+            output = output + x.split(',')[0] + ',' + target + '\n'
     return output
 
 def main():
