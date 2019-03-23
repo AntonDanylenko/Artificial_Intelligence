@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 import sys
-from pqueue import * 
+from pqueue import *
 
 def makeDict():
     dict_f = open("dictall.txt", "r")
@@ -120,7 +120,7 @@ def search(input):
             print("frontier: " + str(frontier))
             #print("NBOR LOOP ENDED")
             explored.append(current.word)
-            current = frontier.delete()
+            current = frontier.pop()
         if current!=None:
             output = output + x.split(',')[0] + ',' + ','.join(current.path) + ',' + current.word + "\n"
         else:
