@@ -46,7 +46,7 @@ class PriorityQueue:
         self.queue = []
 
     def __str__(self):
-        return ' '.join([str(i) for i in self.queue])
+        return "[[[" + '\n'.join([str(i) for i in self.queue]) + "]]]"
 
     # for checking if the queue is empty
     def isEmpty(self):
@@ -75,7 +75,7 @@ class Node:
         self.g = 0
         self.h = 0
         self.path = []
-    
+
     def __str__(self):
         return self.word + ', ' + str(self.g) + ', ' + str(self.h) + ', ' + ','.join(self.path)
 
