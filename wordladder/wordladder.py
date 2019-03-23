@@ -106,14 +106,15 @@ def search(input):
         print("cur word: " + current.word)
         print("frontier: " + str(frontier))
         while current!=None and current.word != target:
+            print("cur word: " + current.word)
             for x in nbors[current.word]:
-                print(x)
+                #print(x)
                 neighbor = Node(x)
                 neighbor.g = g(current)
                 neighbor.h = h(neighbor, target)
                 neighbor.path.append(current.word)
                 frontier.insert(neighbor)
-            print("NBOR LOOP ENDED")
+            #print("NBOR LOOP ENDED")
             explored.append(current.word)
             current = frontier.delete()
         output.append(current.word + ',' + ','.join(current.path) + "\n")
