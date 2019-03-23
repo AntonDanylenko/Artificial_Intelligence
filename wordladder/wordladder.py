@@ -28,6 +28,7 @@ def read_input():
     req_f_cont = req_f.read()
     requests = req_f_cont.split('\n')
     req_f.close()
+    print(requests)
     index = len(requests)-1
     while requests[index]=='':
         del requests[index]
@@ -35,10 +36,9 @@ def read_input():
     print(requests)
     return requests
 
-def write_output(array):
+def write_output(string):
     ans_f = open(sys.argv[2], 'w')
-    for x in range(len(array)):
-        ans_f.write(array[x][0] + ',' + str(array[x][1]) + '\n')
+    ans_f.write(string)
     ans_f.close()
 
 class PriorityQueue(object):
@@ -61,7 +61,7 @@ class PriorityQueue(object):
         try:
             max = 0
             for i in range(len(self.queue)):
-                if self.queue[i] > self.queue[max]:
+                if self.queue[i].word > self.queue[max].word:
                     max = i
             item = self.queue[max]
             del self.queue[max]
@@ -73,33 +73,53 @@ class PriorityQueue(object):
 class Node:
     def __init__(self, value):
         self.word = value
-        self.dist = NULL
+        self.g = 0
+        self.h = 0
         self.path = []
 
-def my_cmp(node1, node2):
-    for x in range(len(node1.word)):
-        if node1.word[x]!=node2.word[x]:
+def my_cmp(word1, word2):
+    for x in range(len(word1)):
+        if word1[x]!=word2[x]:
             return False
     return True
+
+def g(node_prev):
+    return node_prev.g + 1
+
+def h(node, target):
+    dist_away = 0
+    for x in range(len(node.word)):
+        if node.word[x]!=target[x]:
+            dist_away+=1
+    return dist_away
 
 def search(input):
     nbors = makeDict()
     #print(nbors)
     output = ""
     for x in input:
+        target = x.split(',')[1]
         explored = []
         frontier = PriorityQueue()
-        frontier.append(Node(x.split(',')[0]))
+        frontier.insert(Node(x.split(',')[0]))
         current = frontier.delete()
-        for x in nbors[current.word]:
-            frontier.insert(Node(x))
-        while !my_cmp(Node(current), Node(x.split(',')[1])):
-
-        output.append(','.join(current.path) + "\n")
+        print("cur word: " + current.word)
+        while current!=None and current.word != target:
+            for x in nbors[current.word]:
+                neighbor = Node(x)
+                neighbor.g = g(current)
+                neighbor.h = h(neighbor, target)
+                neighbor.path.append(current.word)
+                frontier.insert(neighbor)
+            explored.append(current.word)
+            current = frontier.delete()
+        output.append(current.word + ',' + ','.join(current.path) + "\n")
     return output
 
 def main():
     requests = read_input()
-    search(requests)
+    print(requests)
+    output = search(requests)
+    write_output(output)
 
 main()
