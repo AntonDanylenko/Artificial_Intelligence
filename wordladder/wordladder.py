@@ -75,6 +75,9 @@ class Node:
         self.g = 0
         self.h = 0
         self.path = []
+    
+    def __str__(self):
+        return self.word + ', ' + str(self.g) + ', ' + str(self.h) + ', ' + ','.join(self.path)
 
 def my_cmp(word1, word2):
     for x in range(len(word1)):
