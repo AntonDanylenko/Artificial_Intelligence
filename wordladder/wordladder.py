@@ -24,7 +24,7 @@ def makeDict():
     return result
 
 def read_input():
-    req_f = open(sys.argv[1], "r")
+    req_f = open("input.txt", "r")
     req_f_cont = req_f.read()
     requests = req_f_cont.split('\n')
     req_f.close()
@@ -41,7 +41,7 @@ def write_output(string):
     ans_f.write(string)
     ans_f.close()
 
-class PriorityQueue(object):
+class PriorityQueue:
     def __init__(self):
         self.queue = []
 
@@ -61,7 +61,7 @@ class PriorityQueue(object):
         try:
             max = 0
             for i in range(len(self.queue)):
-                if self.queue[i].word > self.queue[max].word:
+                if self.queue[i].g + self.queue[i].h > self.queue[max].g + self.queue[max].h:
                     max = i
             item = self.queue[max]
             del self.queue[max]
@@ -117,6 +117,7 @@ def search(input):
     return output
 
 def main():
+    print("running")
     requests = read_input()
     print(requests)
     output = search(requests)
