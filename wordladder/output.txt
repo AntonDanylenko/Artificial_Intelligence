@@ -1,0 +1,5 @@
+wait,wail,tail
+lost,lose,love
+hint,herd,head
+flop,flog,frog
+hear,ache
