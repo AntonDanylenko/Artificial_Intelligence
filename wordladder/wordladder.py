@@ -61,7 +61,7 @@ class PriorityQueue:
         try:
             min = 0
             for i in range(len(self.queue)):
-                if self.queue[i].g + self.queue[i].h < self.queue[min].g + self.queue[max].h:
+                if self.queue[i].g + self.queue[i].h < self.queue[min].g + self.queue[min].h:
                     max = i
             item = self.queue[min]
             del self.queue[min]
