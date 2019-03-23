@@ -59,12 +59,12 @@ class PriorityQueue:
     # for popping an element based on Priority
     def delete(self):
         try:
-            max = 0
+            min = 0
             for i in range(len(self.queue)):
-                if self.queue[i].g + self.queue[i].h > self.queue[max].g + self.queue[max].h:
+                if self.queue[i].g + self.queue[i].h < self.queue[min].g + self.queue[max].h:
                     max = i
-            item = self.queue[max]
-            del self.queue[max]
+            item = self.queue[min]
+            del self.queue[min]
             return item
         except IndexError:
             return None
@@ -114,6 +114,7 @@ def search(input):
                     neighbor = Node(i)
                     neighbor.g = g(current)
                     neighbor.h = h(neighbor, target)
+                    neighbor.path.extend(current.path)
                     neighbor.path.append(current.word)
                     frontier.insert(neighbor)
             print("frontier: " + str(frontier))
