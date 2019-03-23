@@ -1,5 +1,1 @@
 head,wail,tail
-hate,lose,love
-read,herd,head
-hazy,flog,frog
-head,ache
