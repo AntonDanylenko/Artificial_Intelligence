@@ -91,8 +91,8 @@ def h(node, target):
     return dist_away
 
 def my_cmp(a, b):
-    if a.g + a.h < b.g + b.h return -1
-    if a.g + a.h == b.g + b.h return 0
+    if a.g + a.h < b.g + b.h: return -1
+    if a.g + a.h == b.g + b.h: return 0
     return 1
 
 def search(input):
