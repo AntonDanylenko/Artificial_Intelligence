@@ -102,12 +102,12 @@ def search(input):
         frontier = PriorityQueue()
         frontier.insert(Node(x.split(',')[0]))
         current = frontier.delete()
-        #print("cur word: " + current.word)
-        print("frontier: " + str(frontier))
+        print("cur word: " + current.word)
+        #print("frontier: " + str(frontier))
         while current!=None and current.word != target:
             #print("cur word: " + current.word)
             for i in nbors[current.word]:
-                #print(x)
+                print(i)
                 if i not in explored:
                     neighbor = Node(i)
                     neighbor.g = g(current)
