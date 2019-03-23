@@ -118,7 +118,7 @@ def search(input):
             #print("NBOR LOOP ENDED")
             explored.append(current.word)
             current = frontier.delete()
-        output.append(current.word + ',' + ','.join(current.path) + "\n")
+        output = output + current.word + ',' + ','.join(current.path) + "\n"
     return output
 
 def main():
