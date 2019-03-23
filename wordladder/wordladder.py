@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 import sys
-import pqueue
+from pqueue import * 
 
 def makeDict():
     dict_f = open("dictall.txt", "r")
