@@ -43,10 +43,11 @@ class MyStack:
 
     def push(self, args):
         self.cells.append(args[0])
-        print(self.cells)
+        #print(self.cells)
         self.stack.append(args[1])
 
     def pop(self):
+        #print("cells: " + str(self.cells))
         return [self.cells.pop(len(self.cells)-1), self.stack.pop(len(self.stack)-1)]
 
 # class Sudoku:
@@ -83,34 +84,40 @@ def nextOpenCell(board, prev_cell):
     return None
 
 def nextValidGuess(board,cell,num):
-    temp = [None, True]
+    temp = [None, False]
     for guess in range(num, 10):
         #print(guess)
         valid = True
         for clique in Cliques:
-            if cell in clique and valid==True:
+            if valid and cell in clique:
                 for index in range(len(clique)):
                     #print("board[clique[index]]: " + str(board[clique[index]]) + ", guess: " + str(guess))
                     #print(valid)
                     #print(len(board))
-                    if str(board[clique[index]])==str(guess):
+                    if valid and str(board[clique[index]])==str(guess):
                         valid = False
         if valid:
             if not temp[0]:
-                temp = [guess, False]
+                temp = [guess, True]
             else:
-                temp = [temp[0], True]
+                temp = [temp[0], False]
     return temp
 
 def printBoard(board):
+    result = ""
     for x in range(9):
-        print(board[x*9:x*9+9])
+        for y in range(8):
+            result += str(board[x*9+y]) + ","
+        result += str(board[x*9+8]) + "\n"
+    print(result)
 
 def writeBoard(argv,name,board):
     f = open(argv[2], "w")
-    f.write(name)
+    #f.write(name.replace("unsolved", "solved") + "\n")
     for x in range(9):
-        f.write(str(board[x*9:x*9+9]))
+        for y in range(8):
+            f.write(str(board[x*9+y]) + ",")
+        f.write(str(board[x*9+8]) + "\n")
     f.close()
 
 # States
@@ -140,8 +147,8 @@ def main(argv=None):
 
         # we're on a new open cell
         if state == NEW_CELL:
-            printBoard(board)
-            print("-------")
+            #printBoard(board)
+            #print("-------")
             guess,forced = nextValidGuess(board,cell,1)
             #print ("NEW_CELL,cell,guess,forced",cell,guess,forced)
             if not guess:
