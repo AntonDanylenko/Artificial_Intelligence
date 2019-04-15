@@ -129,34 +129,6 @@ def write_output(string):
     ans_f.write(string)
     ans_f.close()
 
-class PriorityQueue:
-    def __init__(self):
-        self.queue = []
-
-    def __str__(self):
-        return "[[[" + '\n'.join([str(i) for i in self.queue]) + "]]]"
-
-    # for checking if the queue is empty
-    def isEmpty(self):
-        return len(self.queue) == []
-
-    # for inserting an element in the queue
-    def insert(self, data):
-        self.queue.append(data)
-
-    # for popping an element based on Priority
-    def delete(self):
-        try:
-            min = 0
-            for i in range(len(self.queue)):
-                if self.queue[i].g + self.queue[i].h < self.queue[min].g + self.queue[min].h:
-                    max = i
-            item = self.queue[min]
-            del self.queue[min]
-            return item
-        except IndexError:
-            return None
-
 class Node:
     def __init__(self, value):
         self.word = value
