@@ -103,7 +103,8 @@ def getBoard(argv):
     board = []
     temp = ""
     for x in range(len(lines)):
-        if lines[x]==name:
+        if name in lines[x]:
+            name = lines[x]
             for y in range(x+1, x+10):
                 temp+=lines[y]
             temp = temp.replace(',', '')
@@ -135,18 +136,24 @@ def nextClique(clique, search_type):
 #         next_cell = nextOpenCellinClique(board, clique, start_index)
 #     return next_cell
 
+def nextOpenCell(board, prev_cell):
+    for x in range(prev_cell+1, len(board)):
+        if board[x]=='_':
+            return x
+    return None
+
 def nextOpenCellinClique(board, prev_cell, clique):
-    print("nextOpenCellinClique")
+    #print("nextOpenCellinClique")
     start_index = 0
     if prev_cell in clique:
         start_index = clique.index(prev_cell)+1
-    print("start_index: ", start_index)
+    #print("start_index: ", start_index)
     for x in range(start_index, 9):
         if board[clique[x]]=='_':
-            print("prev_cell: ", prev_cell)
-            print("clique: ", clique)
-            print("returns: ", x)
-            print("-----------------------")
+            # print("prev_cell: ", prev_cell)
+            # print("clique: ", clique)
+            # print("returns: ", x)
+            # print("-----------------------")
             return clique[x]
     return None #if there are no open cells in the clique, main func should handle moving on to next clique
 
@@ -219,12 +226,11 @@ def main(argv=None):
                     state = NEXT_CLIQUE
                     continue
             cell = nextOpenCellinClique(board,cell,clique)
-            print("Cell: ", cell)
+            #print("Cell: ", cell)
             if cell==None:
                 if not temp_cell==None:
-                    printBoard(board)
+                    #printBoard(board)
                     board[temp_cell] = cur_num
-                    mystack.push([temp_cell,board[:]])
                 state = NEXT_CLIQUE
             continue
 
@@ -254,62 +260,63 @@ def main(argv=None):
             state == NEW_CELL
             continue
 
+    print("Smart strat time: " + str(time.time()-start_time))
     printBoard(board)
 
-    # nback = 0
-    # ntrials = 0
-    # Count = 0
-    # state = NEW_CELL
-    # while True:
-    #     ntrials += 1
-    #     #if ntrials % 10000 == 0: print ('ntrials,nback',ntrials,nback)
-    #
-    #     # we're on a new open cell
-    #     if state == NEW_CELL:
-    #         #printBoard(board)
-    #         #print("-------")
-    #         guess,forced = nextValidGuess(board,cell,1)
-    #         #print ("NEW_CELL,cell,guess,forced",cell,guess,forced)
-    #         if not guess:
-    #             # failed to find a valid guess for this cell, backtrack
-    #             state = BACKTRACK
-    #         else:
-    #             board[cell] = guess
-    #             #print(cell)
-    #             if not forced:
-    #                 mystack.push([cell,board[:]])
-    #             state = FIND_NEXT_CELL
-    #         continue
-    #
-    #     # find a new open cell
-    #     if state == FIND_NEXT_CELL:
-    #         cell = nextOpenCell(board,cell)
-    #         if not cell:
-    #             # Solution!
-    #             break
-    #         state = NEW_CELL
-    #         continue
-    #
-    #     # backtrack
-    #     if state == BACKTRACK:
-    #         nback += 1
-    #         #print("cell: " + str(cell))
-    #         cell,board = mystack.pop()
-    #         old_guess = board[cell]
-    #         guess,forced = nextValidGuess(board,cell,old_guess+1)  # note: state cannot be forced
-    #         #print('BACKTRACK,cell,guess,forced',cell,guess,forced)
-    #         if not guess:
-    #             state = BACKTRACK
-    #         else:
-    #             board[cell] = guess
-    #             mystack.push([cell,board[:]])
-    #             state = FIND_NEXT_CELL
-    #         continue
-    #
-    # time_elapsed = time.time() - start_time
-    # print("Solution time: " + str(round(time_elapsed, 3)))
-    # print ('Solution!, with ntrials, backtracks: ', ntrials,nback)
-    # printBoard(board)
-    # writeBoard(argv,name,board)
+    nback = 0
+    ntrials = 0
+    Count = 0
+    state = NEW_CELL
+    while True:
+        ntrials += 1
+        #if ntrials % 10000 == 0: print ('ntrials,nback',ntrials,nback)
+
+        # we're on a new open cell
+        if state == NEW_CELL:
+            #printBoard(board)
+            #print("-------")
+            guess,forced = nextValidGuess(board,cell,1)
+            #print ("NEW_CELL,cell,guess,forced",cell,guess,forced)
+            if not guess:
+                # failed to find a valid guess for this cell, backtrack
+                state = BACKTRACK
+            else:
+                board[cell] = guess
+                #print(cell)
+                if not forced:
+                    mystack.push([cell,board[:]])
+                state = FIND_NEXT_CELL
+            continue
+
+        # find a new open cell
+        if state == FIND_NEXT_CELL:
+            cell = nextOpenCell(board,cell)
+            if not cell:
+                # Solution!
+                break
+            state = NEW_CELL
+            continue
+
+        # backtrack
+        if state == BACKTRACK:
+            nback += 1
+            #print("cell: " + str(cell))
+            cell,board = mystack.pop()
+            old_guess = board[cell]
+            guess,forced = nextValidGuess(board,cell,old_guess+1)  # note: state cannot be forced
+            #print('BACKTRACK,cell,guess,forced',cell,guess,forced)
+            if not guess:
+                state = BACKTRACK
+            else:
+                board[cell] = guess
+                mystack.push([cell,board[:]])
+                state = FIND_NEXT_CELL
+            continue
+
+    time_elapsed = time.time() - start_time
+    print("Solution time: " + str(round(time_elapsed, 3)))
+    print ('Solution!, with ntrials, backtracks: ', ntrials,nback)
+    printBoard(board)
+    writeBoard(argv,name,board)
 
 main()
