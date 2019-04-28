@@ -141,6 +141,11 @@ def nextOpenCellinClique(board, prev_cell, clique):
         start_index = clique.index(prev_cell)+1
     for x in range(start_index, 9):
         if board[clique[x]]=='_':
+            print("nextOpenCellinClique")
+            print("prev_cell: ", prev_cell)
+            print("clique: ", clique)
+            print("returns: ", x)
+            print("-----------------------")
             return x
     return None #if there are no open cells in the clique, main func should handle moving on to next clique
 
