@@ -136,20 +136,20 @@ def nextClique(clique, search_type):
 #         next_cell = nextOpenCellinClique(board, clique, start_index)
 #     return next_cell
 
-def minCell(guess_board):
-    min_index = 0
-    min=10
-    #print("guess_board: ", guess_board)
-    # print("len(guess_board): ", len(guess_board))
-    for x in range(len(guess_board)):
-        if guess_board[x]<min:
-            min = guess_board[x]
-            min_index = x
-    # print("min_index: ", min_index)
-    # print("min: ", min)
-    if min<10:
-        return min_index
-    return 81
+# def minCell(guess_board):
+#     min_index = 0
+#     min=10
+#     #print("guess_board: ", guess_board)
+#     # print("len(guess_board): ", len(guess_board))
+#     for x in range(len(guess_board)):
+#         if guess_board[x]<min:
+#             min = guess_board[x]
+#             min_index = x
+#     # print("min_index: ", min_index)
+#     # print("min: ", min)
+#     if min<10:
+#         return min_index
+#     return 81
 
 def nextOpenCell(board, prev_cell):
     for x in range(prev_cell+1, len(board)):
@@ -190,16 +190,16 @@ def numGuesses(board,cell):
             num_guesses+=1
     return num_guesses
 
-def makeGuessBoard(board):
-    guess_board = []
-    for cell in range(len(board)):
-        if board[cell]=='_':
-            guess_board.append(numGuesses(board,cell))
-        else:
-            guess_board.append(10)
-    # print("GUess_board: ", guess_board)
-    # print("LEn(guess_board): ", len(guess_board))
-    return guess_board
+# def makeGuessBoard(board):
+#     guess_board = []
+#     for cell in range(len(board)):
+#         if board[cell]=='_':
+#             guess_board.append(numGuesses(board,cell))
+#         else:
+#             guess_board.append(10)
+#     # print("GUess_board: ", guess_board)
+#     # print("LEn(guess_board): ", len(guess_board))
+#     return guess_board
 
 def nextValidGuess(board,cell,num):
     temp = [None, False]
