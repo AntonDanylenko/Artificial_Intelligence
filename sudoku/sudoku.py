@@ -69,7 +69,8 @@ def getBoard(argv):
     board = []
     temp = ""
     for x in range(len(lines)):
-        if lines[x]==name:
+        if name in lines[x]:
+            name = lines[x]
             for y in range(x+1, x+10):
                 temp+=lines[y]
             temp = temp.replace(',', '')
