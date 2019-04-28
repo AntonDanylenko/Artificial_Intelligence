@@ -297,6 +297,7 @@ def main(argv=None):
             continue
 
         if state == REPEAT:
+            printBoard(board)
             if num_placed==0:
                 break
             search_type = 0
