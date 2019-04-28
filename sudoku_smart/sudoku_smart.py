@@ -200,10 +200,13 @@ def writeBoard(argv,name,board):
 NEW_CELL = 0
 FIND_NEXT_CELL = 1
 BACKTRACK = 2
-NEXT_CLIQUE = 3
-NEXT_SEARCH_TYPE = 4
-NEXT_NUM = 5
-REPEAT = 6
+TEST_CLIQUE = 3
+NEXT_CLIQUE = 4
+NEXT_SEARCH_TYPE = 5
+NEXT_NUM = 6
+REPEAT = 7
+NAIVE_TIME = 8
+START_STRAT = 9
 
 def main(argv=None):
     if not argv:
@@ -218,12 +221,24 @@ def main(argv=None):
     clique = findClique(-1,search_type)
     cell = nextOpenCellinClique(board,-1,clique) #makes cell first open cell in first square
     cur_num = 1
-    state = NEW_CELL
+    state = TEST_CLIQUE
     temp_cell = None
     num_placed = 0
+    mystack = MyStack()
+    nback = 0
     while True:
-        if state == NEW_CELL:
-            #print("state: NEW_CELL")
+        if state == START_STRAT:
+            search_type = 0
+            clique = findClique(-1,search_type)
+            cell = nextOpenCellinClique(board,-1,clique) #makes cell first open cell in first square
+            cur_num = 1
+            state = TEST_CLIQUE
+            temp_cell = None
+            num_placed = 0
+            continue
+
+        if state == TEST_CLIQUE:
+            #print("state: TEST_CLIQUE")
             # print("Search_type: ", search_type)
             # print("Clique: ", clique)
             # print("Cell: ", cell)
@@ -270,7 +285,7 @@ def main(argv=None):
             #     print("clique: ", clique)
             #     print("cell: ", cell)
             #     print("////////////////////")
-            state = NEW_CELL
+            state = TEST_CLIQUE
             continue
 
         if state == NEXT_SEARCH_TYPE:
@@ -281,7 +296,7 @@ def main(argv=None):
                 continue
             clique = findClique(-1,search_type)
             cell = nextOpenCellinClique(board,-1,clique)
-            state = NEW_CELL
+            state = TEST_CLIQUE
             continue
 
         if state == NEXT_NUM:
@@ -293,40 +308,32 @@ def main(argv=None):
             search_type=0
             clique = findClique(-1,search_type)
             cell = nextOpenCellinClique(board,-1,clique)
-            state = NEW_CELL
-            #print("move back to NEW_CELL")
+            state = TEST_CLIQUE
+            #print("move back to TEST_CLIQUE")
             continue
 
         if state == REPEAT:
             #printBoard(board)
             if num_placed==0:
-                break
+                state = NAIVE_TIME
+                continue
             search_type = 0
             clique = findClique(-1,search_type)
             cell = nextOpenCellinClique(board,-1,clique) #makes cell first open cell in first square
             cur_num = 1
-            state = NEW_CELL
             temp_cell = None
             num_placed = 0
-            state = NEW_CELL
+            state = TEST_CLIQUE
             continue
 
-    print("Smart strat time: " + str(time.time()-start_time))
-    printBoard(board)
-
-
-    mystack = MyStack()
-    nback = 0
-    ntrials = 0
-    cell = nextOpenCell(board,-1)
-    Count = 0
-    state = NEW_CELL
-    while True:
-        if cell == None:
-            break
-
-        ntrials += 1
-        #if ntrials % 10000 == 0: print ('ntrials,nback',ntrials,nback)
+        if state == NAIVE_TIME:
+            #print("Smart strat time: " + str(time.time()-start_time))
+            #printBoard(board)
+            cell = nextOpenCell(board,-1)
+            state = NEW_CELL
+            if cell == None:
+                break
+            continue
 
         # we're on a new open cell
         if state == NEW_CELL:
@@ -342,6 +349,8 @@ def main(argv=None):
                 #print(cell)
                 if not forced:
                     mystack.push([cell,board[:]])
+                    state = START_STRAT
+                    continue
                 state = FIND_NEXT_CELL
             continue
 
@@ -368,12 +377,14 @@ def main(argv=None):
                 board[cell] = guess
                 if not forced:
                     mystack.push([cell,board[:]])
+                    state = START_STRAT
+                    continue
                 state = FIND_NEXT_CELL
             continue
 
     time_elapsed = time.time() - start_time
     print("Solution time: " + str(round(time_elapsed, 3)))
-    print ('Solution!, with ntrials, backtracks: ', ntrials,nback)
+    print ('Solution!, with backtracks: ',nback)
     printBoard(board)
     writeBoard(argv,name,board)
 

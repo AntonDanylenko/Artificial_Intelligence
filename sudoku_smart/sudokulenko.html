@@ -40,6 +40,12 @@
 		<td style="width: 77px"><strong>Smarter-3</strong></td>
 		<td>Made Smarter-2 more efficient. No new strategies.</td>
 	</tr>
+	<tr>
+		<td style="width: 77px"><strong>Smarter-3</strong></td>
+		<td>Combined Smarter-2 and Naive strategies into one loop. After each guess,
+		Smarter-2 strategy is employed on the new board. If Smarter-2 runs into a problem,
+		that guess is popped along with all the changes Smarter-2 made, and a new guess is tried.</td>
+	</tr>
 </table>
 
 <p>&nbsp;</p>
@@ -50,11 +56,13 @@
 		<td><strong>Smarter-1</strong></td>
 		<td><strong>Smarter-2</strong></td>
 		<td><strong>Smarter-3</strong></td>
+		<td><strong>Smarter-4</strong></td>
 	</tr>
 	<tr>
 		<td><strong>A1</strong></td>
 		<td>time = 0.016 secs,&nbsp; backtracks=126</td>
 		<td>t=0.016, b=0, ratio (Naive/Smarter-1) = &infin;</td>
+		<td>t=0.016, b=0, r=&infin;</td>
 		<td>t=0.016, b=0, r=&infin;</td>
 		<td>t=0.016, b=0, r=&infin;</td>
 	</tr>
@@ -64,6 +72,7 @@
 		<td>t=0.203, b=1105, r=14.03</td>
 		<td>t=0.125, b=345, r=44.94</td>
 		<td>t=0.094, b=188, r=82.47</td>
+		<td>t=0.094, b=2, r=7,752.00</td>
 	</tr>
 	<tr>
 		<td><strong>A3</strong></td>
@@ -71,6 +80,7 @@
 		<td>t=0.718, b=4,648, r=1.38</td>
 		<td>t=0.530, b=3,363, r=1.90</td>
 		<td>t=0.359, b=1,871, r=3.42</td>
+		<td>t=0.858, b=59, r=108.39</td>
 	</tr>
 	<tr>
 		<td><strong>A4</strong></td>
@@ -78,6 +88,7 @@
 		<td>t=0.811, b=4,558, r=4.73</td>
 		<td>t=0.031, b=31, r=695.39</td>
 		<td>t=0.031, b=19, r=1134.58</td>
+		<td>t=0.031, b=1, r=21,557.00</td>
 	</tr>
 	<tr>
 		<td><strong>A5</strong></td>
@@ -85,6 +96,7 @@
 		<td>t=0.187, b=1,212, r=3.30</td>
 		<td>t=0.187, b=1,188, r=3.37</td>
 		<td>t=0.140, b=671, r=5.96</td>
+		<td>t=0.047, b=0, r=&infin;</td>
 	</tr>
 	<tr>
 		<td><strong>A6</strong></td>
@@ -92,6 +104,7 @@
 		<td>t=4.259, b=28,337, r=1</td>
 		<td>t=3.885, b=28,337, r=1</td>
 		<td>t=2.980, b=16,476, r=1.72</td>
+		<td>t=2.403, b=146, r=194.09</td>
 	</tr>
 	<tr>
 		<td><strong>A7</strong></td>
@@ -99,6 +112,7 @@
 		<td>t=63.015, b=365,741, r=3.46</td>
 		<td>t=31.250, b=197,670, r=6.40</td>
 		<td>t=21.817, b=105,562, r=11.98</td>
+		<td>t=0.343, b=11, r=114,926.73</td>
 	</tr>
 	<tr>
 		<td><strong>A8</strong></td>
@@ -106,6 +120,7 @@
 		<td>t=487.156, b=2,821,037, r=3.70</td>
 		<td>t=213.588, b=1,229,079, r=8.50</td>
 		<td>t=156.649, b=666,282, r=15.68</td>
+		<td>t=110.345, b=15,039, r=694.59</td>
 	</tr>
 </table>
 
