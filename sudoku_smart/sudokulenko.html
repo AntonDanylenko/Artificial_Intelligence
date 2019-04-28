@@ -32,7 +32,9 @@
 	</tr>
 	<tr>
 		<td style="width: 77px"><strong>Smarter-2</strong></td>
-		<td></td>
+		<td>Same as Smarter-1, except solver now checks if at least one number has been placed using the
+		Smarter-1 strategy. If it has, the Smarter-1 strategy is repeated until no more definite numbers
+		can be placed. If there are still open spaces, solver resorts to naive method.</td>
 	</tr>
 </table>
 
@@ -48,49 +50,49 @@
 		<td><strong>A1</strong></td>
 		<td>time = 0.016 secs,&nbsp; backtracks=126</td>
 		<td>t=0.016, b=0, ratio (Naive/Smarter-1) = &infin;</td>
-		<td>t=0.008, b=0, r=&infin;</td>
+		<td>t=0.000, b=0, r=&infin;</td>
 	</tr>
 	<tr>
 		<td><strong>A2</strong></td>
 		<td>t=2.516, b=15,504</td>
 		<td>t=0.203, b=1105, r=14.03</td>
-		<td>t=0.01, b=26, r=596</td>
+		<td>t=0.125, b=345, r=44.94</td>
 	</tr>
 	<tr>
 		<td><strong>A3</strong></td>
 		<td>t=0.998, b=6,395</td>
 		<td>t=0.718, b=4,648, r=1.38</td>
-		<td>t=0.012, b=28, r=228</td>
+		<td>t=0.530, b=3,363, r=1.90</td>
 	</tr>
 	<tr>
 		<td><strong>A4</strong></td>
 		<td>t=3.689, b=21,557</td>
 		<td>t=0.811, b=4,558, r=4.73</td>
-		<td>t=0.008, b=7, r=3,079</td>
+		<td>t=0.031, b=31, r=695.39</td>
 	</tr>
 	<tr>
 		<td><strong>A5</strong></td>
 		<td>t=0.687, b=4,001</td>
 		<td>t=0.187, b=1,212, r=3.30</td>
-		<td>t=0.004, b=0, r=&infin;</td>
+		<td>t=0.218, b=1,188, r=3.37</td>
 	</tr>
 	<tr>
 		<td><strong>A6</strong></td>
 		<td>t=4.297, b=28,337</td>
 		<td>t=4.259, b=28,337, r=1</td>
-		<td>t=0.253, b=922, r=30</td>
+		<td>t=4.291, b=28,337, r=1</td>
 	</tr>
 	<tr>
 		<td><strong>A7</strong></td>
 		<td>t=233.196, b=1,264,194</td>
 		<td>t=63.015, b=365,741, r=3.46</td>
-		<td>t=0.442, b=1,919, r=658</td>
+		<td>t=31.25, b=197,670, r=6.40</td>
 	</tr>
 	<tr>
 		<td><strong>A8</strong></td>
 		<td>t=1961.588, b=10,445,922</td>
 		<td>t=487.156, b=2,821,037, r=3.70</td>
-		<td>t=0.653, b=3,140, r=3326</td>
+		<td>t=213.588, b=1,229,079, r=8.50</td>
 	</tr>
 </table>
 

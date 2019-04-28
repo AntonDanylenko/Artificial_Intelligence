@@ -289,6 +289,7 @@ def main(argv=None):
             cur_num+=1
             if cur_num==10:
                 state = REPEAT
+                continue
             search_type=0
             clique = findClique(-1,search_type)
             cell = nextOpenCellinClique(board,-1,clique)
@@ -297,7 +298,7 @@ def main(argv=None):
             continue
 
         if state == REPEAT:
-            printBoard(board)
+            #printBoard(board)
             if num_placed==0:
                 break
             search_type = 0
@@ -321,6 +322,9 @@ def main(argv=None):
     Count = 0
     state = NEW_CELL
     while True:
+        if cell == None:
+            break
+
         ntrials += 1
         #if ntrials % 10000 == 0: print ('ntrials,nback',ntrials,nback)
 
