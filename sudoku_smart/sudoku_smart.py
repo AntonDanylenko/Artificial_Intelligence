@@ -136,11 +136,26 @@ def nextClique(clique, search_type):
 #         next_cell = nextOpenCellinClique(board, clique, start_index)
 #     return next_cell
 
+def minCell(guess_board):
+    min_index = 0
+    min=10
+    #print("guess_board: ", guess_board)
+    # print("len(guess_board): ", len(guess_board))
+    for x in range(len(guess_board)):
+        if guess_board[x]<min:
+            min = guess_board[x]
+            min_index = x
+    # print("min_index: ", min_index)
+    # print("min: ", min)
+    if min<10:
+        return min_index
+    return 81
+
 def nextOpenCell(board, prev_cell):
     for x in range(prev_cell+1, len(board)):
         if board[x]=='_':
             return x
-    return None
+    return 81
 
 def nextOpenCellinClique(board, prev_cell, clique):
     # if cur_num==4:
@@ -167,6 +182,24 @@ def canPlace(board, cell, num):
                 if str(board[place])==str(num):
                     return False
     return True
+
+def numGuesses(board,cell):
+    num_guesses = 0
+    for num in range(0,10):
+        if canPlace(board,cell,num):
+            num_guesses+=1
+    return num_guesses
+
+def makeGuessBoard(board):
+    guess_board = []
+    for cell in range(len(board)):
+        if board[cell]=='_':
+            guess_board.append(numGuesses(board,cell))
+        else:
+            guess_board.append(10)
+    # print("GUess_board: ", guess_board)
+    # print("LEn(guess_board): ", len(guess_board))
+    return guess_board
 
 def nextValidGuess(board,cell,num):
     temp = [None, False]
@@ -226,6 +259,7 @@ def main(argv=None):
     num_placed = 0
     mystack = MyStack()
     nback = 0
+    guess_board = []
     while True:
         if state == START_STRAT:
             search_type = 0
@@ -329,9 +363,13 @@ def main(argv=None):
         if state == NAIVE_TIME:
             #print("Smart strat time: " + str(time.time()-start_time))
             #printBoard(board)
+            #guess_board = makeGuessBoard(board)
+            #print(guess_board)
+            # print("GUEss_board: ", guess_board)
+            # print("LEN(guess_board): ", len(guess_board))
             cell = nextOpenCell(board,-1)
             state = NEW_CELL
-            if cell == None:
+            if cell == 81:
                 break
             continue
 
@@ -345,7 +383,9 @@ def main(argv=None):
                 # failed to find a valid guess for this cell, backtrack
                 state = BACKTRACK
             else:
+                #print("cell: ", cell)
                 board[cell] = guess
+                #guess_board = makeGuessBoard(board)
                 #print(cell)
                 if not forced:
                     mystack.push([cell,board[:]])
@@ -357,7 +397,7 @@ def main(argv=None):
         # find a new open cell
         if state == FIND_NEXT_CELL:
             cell = nextOpenCell(board,cell)
-            if not cell:
+            if cell == 81:
                 # Solution!
                 break
             state = NEW_CELL
@@ -375,6 +415,7 @@ def main(argv=None):
                 state = BACKTRACK
             else:
                 board[cell] = guess
+                #guess_board = makeGuessBoard(board)
                 if not forced:
                     mystack.push([cell,board[:]])
                     state = START_STRAT
