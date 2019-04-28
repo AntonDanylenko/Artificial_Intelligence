@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Anton's Sudoku Page</title>
+<style type="text/css">
+.auto-style1 {
+	text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<h3 class="auto-style1">Anton Danylenko's Sudoku Solvers</h3>
+<table style="width: 50%" border="1" align="center">
+	<tr>
+		<td style="width: 77px"><strong>Naive</strong></td>
+		<td>"Look for the next open cell (linearly), find and place the next non-conflicting
+		guess, then go on, backtrack when there are no valid guesses for a cell" - Mr. Brooks</td>
+	</tr>
+	<tr>
+		<td style="width: 77px"><strong>Smarter-1</strong></td>
+		<td>Test each number individually. For every three-by-three square, check if the number
+		can be placed in any of the open spaces. If it can only be placed in one space, the number is
+		permanently put there. If not, nothing happens. The solver continues to the next square.
+		Once all the square have been tried, the solver applies the same strategy to the rows and columns.
+		This is done for all the numbers. The solver repeats this process until all the definite numbers
+		have been placed. It then resorts to the naive method.</td>
+	</tr>
+	<tr>
+		<td style="width: 77px"><strong>Smarter-2</strong></td>
+		<td></td>
+	</tr>
+</table>
+
+<p>&nbsp;</p>
+<table border="1" align="center">
+	<tr>
+		<td>&nbsp;</td>
+		<td><strong>Naive</strong></td>
+		<td><strong>Smarter-1</strong></td>
+		<td><strong>Smarter-2</strong></td>
+	</tr>
+	<tr>
+		<td><strong>A1</strong></td>
+		<td>time = 0.016 secs,&nbsp; backtracks=126</td>
+		<td>t=0.025, b=0, ratio (Naive/Smarter-1) = &infin;</td>
+		<td>t=0.008, b=0, r=&infin;</td>
+	</tr>
+	<tr>
+		<td><strong>A2</strong></td>
+		<td>t=2.516, b=15,504</td>
+		<td>t=0.10, b=209, r=74</td>
+		<td>t=0.01, b=26, r=596</td>
+	</tr>
+	<tr>
+		<td><strong>A3</strong></td>
+		<td>t=0.998, b=6,395</td>
+		<td>t=0.032, b=54, r=118</td>
+		<td>t=0.012, b=28, r=228</td>
+	</tr>
+	<tr>
+		<td><strong>A4</strong></td>
+		<td>t=3.689, b=21,557</td>
+		<td>t=0.091, b=477, r=45</td>
+		<td>t=0.008, b=7, r=3,079</td>
+	</tr>
+	<tr>
+		<td><strong>A5</strong></td>
+		<td>t=0.687, b=4,001</td>
+		<td>t=0.046, b=0, r=&infin;</td>
+		<td>t=0.004, b=0, r=&infin;</td>
+	</tr>
+	<tr>
+		<td><strong>A6</strong></td>
+		<td>t=4.297, b=28,337</td>
+		<td>t=0.159, b=798, r=35</td>
+		<td>t=0.253, b=922, r=30</td>
+	</tr>
+	<tr>
+		<td><strong>A7</strong></td>
+		<td>t=233.196, b=1,264,194</td>
+		<td>t=5.0, b=63,251, r=20</td>
+		<td>t=0.442, b=1,919, r=658</td>
+	</tr>
+	<tr>
+		<td><strong>A8</strong></td>
+		<td>t=1961.588, b=10,445,922</td>
+		<td>t=28.2, b=294,597, r=35</td>
+		<td>t=0.653, b=3,140, r=3326</td>
+	</tr>
+</table>
+
+</body>
+
+</html>

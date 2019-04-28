@@ -2,6 +2,7 @@
 
 import sys
 import copy
+import time
 
 AllVals = set([1,2,3,4,5,6,7,8,9])
 Cliques=[[0,1,2,3,4,5,6,7,8],\
@@ -78,25 +79,24 @@ def getBoard(argv):
 # def makeNeighbors():
 
 def nextOpenCell(board, prev_cell):
-    for x in range(len(board)):
+    for x in range(prev_cell+1, len(board)):
         if board[x]=='_':
             return x
     return None
+
+def canPlace(board, cell, num):
+    for clique in Cliques:
+        if cell in clique:
+            for index in range(len(clique)):
+                if str(board[clique[index]])==str(num):
+                    return False
+    return True
 
 def nextValidGuess(board,cell,num):
     temp = [None, False]
     for guess in range(num, 10):
         #print(guess)
-        valid = True
-        for clique in Cliques:
-            if valid and cell in clique:
-                for index in range(len(clique)):
-                    #print("board[clique[index]]: " + str(board[clique[index]]) + ", guess: " + str(guess))
-                    #print(valid)
-                    #print(len(board))
-                    if valid and str(board[clique[index]])==str(guess):
-                        valid = False
-        if valid:
+        if canPlace(board,cell,guess):
             if not temp[0]:
                 temp = [guess, True]
             else:
@@ -132,6 +132,7 @@ def main(argv=None):
     name,board = getBoard(argv)
     #print(name)
     printBoard(board)
+    start_time = time.time()
     mystack = MyStack()
     #makeNeighbors()
     nback = 0
@@ -187,6 +188,8 @@ def main(argv=None):
                 state = FIND_NEXT_CELL
             continue
 
+    time_elapsed = time.time() - start_time
+    print("Solution time: " + str(round(time_elapsed, 3)))
     print ('Solution!, with ntrials, backtracks: ', ntrials,nback)
     printBoard(board)
     writeBoard(argv,name,board)
