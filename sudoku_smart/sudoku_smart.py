@@ -147,7 +147,7 @@ def nextOpenCellinClique(board, prev_cell, clique):
             print("clique: ", clique)
             print("returns: ", x)
             print("-----------------------")
-            return x
+            return clique[x]
     return None #if there are no open cells in the clique, main func should handle moving on to next clique
 
 def canPlace(board, cell, num):
