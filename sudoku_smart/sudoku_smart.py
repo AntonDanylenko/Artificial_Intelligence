@@ -136,12 +136,13 @@ def nextClique(clique, search_type):
 #     return next_cell
 
 def nextOpenCellinClique(board, prev_cell, clique):
+    print("nextOpenCellinClique")
     start_index = 0
     if prev_cell in clique:
         start_index = clique.index(prev_cell)+1
+    print("start_index: ", start_index)
     for x in range(start_index, 9):
         if board[clique[x]]=='_':
-            print("nextOpenCellinClique")
             print("prev_cell: ", prev_cell)
             print("clique: ", clique)
             print("returns: ", x)
