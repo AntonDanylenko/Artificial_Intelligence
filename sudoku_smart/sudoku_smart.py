@@ -143,7 +143,9 @@ def nextOpenCell(board, prev_cell):
     return None
 
 def nextOpenCellinClique(board, prev_cell, clique):
-    #print("nextOpenCellinClique")
+    # if cur_num==4:
+    #     print("nextOpenCellinClique")
+    #     print("prev_cell, clique: ", prev_cell, clique)
     start_index = 0
     if prev_cell in clique:
         start_index = clique.index(prev_cell)+1
@@ -152,8 +154,9 @@ def nextOpenCellinClique(board, prev_cell, clique):
         if board[clique[x]]=='_':
             # print("prev_cell: ", prev_cell)
             # print("clique: ", clique)
-            # print("returns: ", x)
-            # print("-----------------------")
+            # if cur_num==4:
+            #     print("returns: ", clique[x])
+            #     print("-----------------------")
             return clique[x]
     return None #if there are no open cells in the clique, main func should handle moving on to next clique
 
@@ -200,6 +203,7 @@ BACKTRACK = 2
 NEXT_CLIQUE = 3
 NEXT_SEARCH_TYPE = 4
 NEXT_NUM = 5
+REPEAT = 6
 
 def main(argv=None):
     if not argv:
@@ -209,7 +213,6 @@ def main(argv=None):
     #print(name)
     printBoard(board)
     start_time = time.time()
-    mystack = MyStack()
     #makeNeighbors()
     search_type = 0
     clique = findClique(-1,search_type)
@@ -217,20 +220,40 @@ def main(argv=None):
     cur_num = 1
     state = NEW_CELL
     temp_cell = None
+    num_placed = 0
     while True:
         if state == NEW_CELL:
+            #print("state: NEW_CELL")
+            # print("Search_type: ", search_type)
+            # print("Clique: ", clique)
+            # print("Cell: ", cell)
             if canPlace(board, cell, cur_num):
+                # if cur_num==4:
+                #     print("canPlace on cell: ", cell)
                 if temp_cell==None:
+                    # if cur_num==4:
+                    #     print("temp_cell, cell: ", temp_cell, cell)
                     temp_cell = cell
                 else:
+                    # if cur_num==4:
+                    #     print("move on to NEXT_CLIQUE")
                     state = NEXT_CLIQUE
                     continue
             cell = nextOpenCellinClique(board,cell,clique)
             #print("Cell: ", cell)
             if cell==None:
+                # if cur_num==4:
+                #     print("--------------------------------------")
+                #     print("END OF CLIQUE")
+                #     print("CUR_NUM 4")
+                #     print("clique: ", clique)
+                #     print("search_type: ", search_type)
+                #     print("temp_cell: ", temp_cell)
+                #     print("--------------------------------------")
                 if not temp_cell==None:
                     #printBoard(board)
                     board[temp_cell] = cur_num
+                    num_placed+=1
                 state = NEXT_CLIQUE
             continue
 
@@ -239,32 +262,61 @@ def main(argv=None):
             temp_cell = None
             if clique==None:
                 state = NEXT_SEARCH_TYPE
+                continue
+            cell = nextOpenCellinClique(board,-1,clique)
+            # if cur_num==4:
+            #     print("////////////////////")
+            #     print("state: NEXT_CLIQUE")
+            #     print("clique: ", clique)
+            #     print("cell: ", cell)
+            #     print("////////////////////")
+            state = NEW_CELL
             continue
 
         if state == NEXT_SEARCH_TYPE:
+            #print("state: NEXT_SEARCH_TYPE")
             search_type+=1
             if search_type==3:
                 state = NEXT_NUM
                 continue
             clique = findClique(-1,search_type)
             cell = nextOpenCellinClique(board,-1,clique)
+            state = NEW_CELL
             continue
 
         if state == NEXT_NUM:
+            #print("state: NEXT_NUM")
             cur_num+=1
             if cur_num==10:
-                break
+                state = REPEAT
             search_type=0
             clique = findClique(-1,search_type)
             cell = nextOpenCellinClique(board,-1,clique)
-            state == NEW_CELL
+            state = NEW_CELL
+            #print("move back to NEW_CELL")
+            continue
+
+        if state == REPEAT:
+            if num_placed==0:
+                break
+            search_type = 0
+            clique = findClique(-1,search_type)
+            cell = nextOpenCellinClique(board,-1,clique) #makes cell first open cell in first square
+            cur_num = 1
+            state = NEW_CELL
+            temp_cell = None
+            num_placed = 0
+            state = NEW_CELL
             continue
 
     print("Smart strat time: " + str(time.time()-start_time))
     printBoard(board)
 
+
+    mystack = MyStack()
     nback = 0
     ntrials = 0
+    cell = nextOpenCell(board,-1)
     Count = 0
     state = NEW_CELL
     while True:
