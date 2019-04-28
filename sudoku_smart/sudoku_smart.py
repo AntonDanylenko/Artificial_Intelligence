@@ -213,6 +213,7 @@ def main(argv=None):
                     state = NEXT_CLIQUE
                     continue
             cell = nextOpenCellinClique(board,cell,clique)
+            print("Cell: ", cell)
             if cell==None:
                 if not temp_cell==None:
                     printBoard(board)
