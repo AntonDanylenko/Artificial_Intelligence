@@ -35,6 +35,12 @@ class Network(object):
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
 
+    def printSelf(self):
+        print("num_layers: ", self.num_layers)
+        print("sizes: ", self.sizes)
+        print("biases: ", self.biases)
+        print("weights: ", self.weights)
+
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
         for b, w in zip(self.biases, self.weights):
@@ -139,3 +145,14 @@ def sigmoid(z):
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
+
+def main():
+    #net = Network([3,2,1])
+    #net.printSelf()
+    import mnist_loader
+    training_data, validation_data, test_data = \
+    mnist_loader.load_data_wrapper()
+    net = Network([784, 30, 10])
+    net.SGD(training_data, 10, 10, 3.0, test_data=test_data)
+
+main()
