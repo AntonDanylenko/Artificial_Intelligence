@@ -67,6 +67,7 @@ cols = [\
 [8,17,26,35,44,53,62,71,80],\
 ]
 clique_list = [squares, rows, cols]
+neighbors = {}
 
 class MyStack:
     def __init__(self, cells = [], list = []):
@@ -111,7 +112,16 @@ def getBoard(argv):
             board = list(temp)
     return [name, board]
 
-# def makeNeighbors():
+def makeNeighbors():
+    for cell in range(81):
+        temp = []
+        for clique in Cliques:
+            if cell in clique:
+                for x in clique:
+                    if x not in temp:
+                        temp.append(x)
+        neighbors[cell] = temp
+    #print(neighbors)
 
 def findClique(cell, search_type):
     if cell==-1:
@@ -123,8 +133,9 @@ def findClique(cell, search_type):
     return None
 
 def nextClique(clique, search_type):
-    if not clique_list[search_type].index(clique)==8:
-        return clique_list[search_type][clique_list[search_type].index(clique)+1]
+    index = clique_list[search_type].index(clique)
+    if not index==8:
+        return clique_list[search_type][index+1]
     return None
 
 # def nextOpenCell(board, prev_cell, search_type):
@@ -176,19 +187,44 @@ def nextOpenCellinClique(board, prev_cell, clique):
     return None #if there are no open cells in the clique, main func should handle moving on to next clique
 
 def canPlace(board, cell, num):
-    for clique in Cliques:
-        if cell in clique:
-            for place in clique:
-                if str(board[place])==str(num):
-                    return False
+    # for clique in Cliques:
+    #     if cell in clique:
+    #         for place in clique:
+    #             if str(board[place])==str(num):
+    #                 return False
+    # return True
+    # print("cell: ", cell)
+    # print("neighbors[cell]: ", neighbors[cell])
+    for x in neighbors[cell]:
+        if str(board[x])==str(num):
+            return False
     return True
 
-def numGuesses(board,cell):
-    num_guesses = 0
-    for num in range(0,10):
+def isForced(board,cell):
+    forced = None
+    for num in range(1,10):
         if canPlace(board,cell,num):
-            num_guesses+=1
-    return num_guesses
+            if forced==None:
+                forced = num
+            else:
+                return None
+    return forced
+
+def nextForced(board,prev_cell):
+    for x in range(prev_cell+1, len(board)):
+        if board[x]=='_':
+            num = isForced(board,x)
+            if not num==None:
+                return [x,num]
+    return [81,None]
+
+# def numGuesses(board,cell):
+#     num_guesses = 0
+#     for num in range(0,10):
+#         #print("Cell: ", cell)
+#         if canPlace(board,cell,num):
+#             num_guesses+=1
+#     return num_guesses
 
 # def makeGuessBoard(board):
 #     guess_board = []
@@ -205,6 +241,7 @@ def nextValidGuess(board,cell,num):
     temp = [None, False]
     for guess in range(num, 10):
         #print(guess)
+        #print("Cell: ", cell)
         if canPlace(board,cell,guess):
             if temp[0]==None:
                 temp = [guess, True]
@@ -240,6 +277,7 @@ NEXT_NUM = 6
 REPEAT = 7
 NAIVE_TIME = 8
 START_STRAT = 9
+FIND_NEXT_FORCED = 10
 
 def main(argv=None):
     if not argv:
@@ -249,7 +287,7 @@ def main(argv=None):
     #print(name)
     printBoard(board)
     start_time = time.time()
-    #makeNeighbors()
+    makeNeighbors()
     search_type = 0
     clique = findClique(-1,search_type)
     cell = nextOpenCellinClique(board,-1,clique) #makes cell first open cell in first square
@@ -275,8 +313,8 @@ def main(argv=None):
             #print("state: TEST_CLIQUE")
             # print("Search_type: ", search_type)
             # print("Clique: ", clique)
-            # print("Cell: ", cell)
-            if canPlace(board, cell, cur_num):
+            #print("Cell: ", cell)
+            if not cell==None and canPlace(board, cell, cur_num):
                 # if cur_num==4:
                 #     print("canPlace on cell: ", cell)
                 if temp_cell==None:
@@ -391,7 +429,7 @@ def main(argv=None):
                     mystack.push([cell,board[:]])
                     state = START_STRAT
                     continue
-                state = FIND_NEXT_CELL
+                state = FIND_NEXT_FORCED
             continue
 
         # find a new open cell
@@ -401,6 +439,18 @@ def main(argv=None):
                 # Solution!
                 break
             state = NEW_CELL
+            continue
+
+        if state == FIND_NEXT_FORCED:
+            temp = None
+            cell, temp = nextForced(board,cell)
+            if cell == 81:
+                cell = nextOpenCell(board,-1)
+                if cell == 81:
+                    break
+                state = NEW_CELL
+                continue
+            board[cell] = temp
             continue
 
         # backtrack
