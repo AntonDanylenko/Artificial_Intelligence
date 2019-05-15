@@ -104,7 +104,7 @@ def main():
     # print("Total number of games: ", game.count_games_total(board, 1))
     # print(game)
     #printBoard(board)
-    board = ['_' for x in range(9)]
+    board = ['_','_','_','_','_','_','_','_','_']
     print("Total number of games 2: ", count_games(board,1))
 
 main()
