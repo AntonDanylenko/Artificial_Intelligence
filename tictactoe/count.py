@@ -83,7 +83,7 @@ def count_games(board, mark):
                         # else:
                         #     self.win_o+=1
                         # print("Mark: ", mark)
-                        # printBoard(board)
+                        printBoard(board)
                         return count+1
             count+=count_games(board[:],0-mark)
             # if not i==8:
@@ -94,7 +94,7 @@ def count_games(board, mark):
     #     if board[i]
     # self.draw+=1
     # print("Mark: ", mark)
-    # printBoard(board)
+    printBoard(board)
     return count+1
 
 def main():
