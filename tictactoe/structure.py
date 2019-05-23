@@ -1,3 +1,5 @@
+import time
+
 ''' Layout positions:
 0 1 2
 3 4 5
@@ -61,7 +63,10 @@ def CreateAllBoards(layout,parent):
     return
 
 def main():
+    start = time.time()
     CreateAllBoards('_________', None)
+    end = time.time()-start
+    print("Runtime: ", round(end,2))
     print("Len of AllBoards: ", len(AllBoards))
     num_children = 0
     num_xs = 0
