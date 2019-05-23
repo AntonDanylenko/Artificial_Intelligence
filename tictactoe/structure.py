@@ -42,7 +42,10 @@ def CreateAllBoards(layout,parent):
                 if layout[spot]==temp:
                     num_filled+=1
             if num_filled>2:
-                AllBoards[layout].endState = mark
+                if mark=='x':
+                    AllBoards[layout].endState = 'o'
+                else:
+                    AllBoards[layout].endState = 'x'
                 for i in range(9):
                     if not layout[i]=='_':
                         AllBoards[layout].parents.append(''.join([layout[:i],'_',layout[i+1:]]))
