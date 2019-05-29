@@ -1,5 +1,6 @@
 import sys
 import time
+import random
 
 ''' Layout positions:
 0 1 2
@@ -99,6 +100,9 @@ def main(argv=None):
     if not argv:
         argv = sys.argv
     layout = argv[1]
+    if layout=='_________':
+        spot = random.randrange(9)
+        layout = ''.join([layout[:spot],'x',layout[spot+1:]])
     start = time.time()
     CreateAllBoards(layout)
     end = time.time()-start
