@@ -71,15 +71,15 @@ def generatePuzzle(filledNum):
     start_time = sudoku_smart.time.time()
     board = generateFilled()
     puzzle = board[:]
-    bad_cell_list = []
+    tried_cell_list = []
     while puzzle.count('_')<81-filledNum:
         cell_index = random.randint(0,80)
-        if not cell_index in bad_cell_list:
+        if not cell_index in tried_cell_list:
             num = puzzle[cell_index]
             puzzle[cell_index] = '_'
+            tried_cell_list.append(cell_index)
             if not compBoards(sudoku_smart.execute(puzzle[:]),board[:]):
                 puzzle[cell_index] = num
-                bad_cell_list.append(cell_index)
     time_elapsed = sudoku_smart.time.time() - start_time
     print("Generation time: " + str(round(time_elapsed, 3)))
     sudoku_smart.printBoard(puzzle)
@@ -87,5 +87,5 @@ def generatePuzzle(filledNum):
 
 # filled = generateFilled()
 # print(checkBoard(filled))
-puzzle = generatePuzzle(22)
-sudoku_smart.printBoard(sudoku_smart.execute(puzzle))
+# puzzle = generatePuzzle(24)
+# sudoku_smart.printBoard(sudoku_smart.execute(puzzle))
