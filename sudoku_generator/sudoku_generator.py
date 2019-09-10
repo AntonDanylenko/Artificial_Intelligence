@@ -31,6 +31,12 @@ def checkBoard(board):
             return False
     return True
 
+def compBoards(b0,b1):
+    for index in range(81):
+        if b0[index]!=b1[index]:
+            return False
+    return True
+
 def generateFilled():
     board = ['_' for x in range(81)]
     sudoku_smart.makeNeighbors()
@@ -61,5 +67,25 @@ def generateFilled():
     sudoku_smart.printBoard(board)
     return board
 
-board = generateFilled()
-print(checkBoard(board))
+def generatePuzzle(filledNum):
+    start_time = sudoku_smart.time.time()
+    board = generateFilled()
+    puzzle = board[:]
+    bad_cell_list = []
+    while puzzle.count('_')<81-filledNum:
+        cell_index = random.randint(0,80)
+        if not cell_index in bad_cell_list:
+            num = puzzle[cell_index]
+            puzzle[cell_index] = '_'
+            if not compBoards(sudoku_smart.execute(puzzle[:]),board[:]):
+                puzzle[cell_index] = num
+                bad_cell_list.append(cell_index)
+    time_elapsed = sudoku_smart.time.time() - start_time
+    print("Generation time: " + str(round(time_elapsed, 3)))
+    sudoku_smart.printBoard(puzzle)
+    return puzzle
+
+# filled = generateFilled()
+# print(checkBoard(filled))
+puzzle = generatePuzzle(22)
+sudoku_smart.printBoard(sudoku_smart.execute(puzzle))

@@ -279,13 +279,7 @@ NAIVE_TIME = 8
 START_STRAT = 9
 FIND_NEXT_FORCED = 10
 
-def main(argv=None):
-    if not argv:
-        argv = sys.argv
-    #print(argv)
-    name,board = getBoard(argv)
-    #print(name)
-    printBoard(board)
+def execute(board):
     start_time = time.time()
     makeNeighbors()
     search_type = 0
@@ -474,9 +468,7 @@ def main(argv=None):
             continue
 
     time_elapsed = time.time() - start_time
-    print("Solution time: " + str(round(time_elapsed, 3)))
-    print ('Solution!, with backtracks: ',nback)
-    printBoard(board)
-    writeBoard(argv,name,board)
-
-#main()
+    # print("Solution time: " + str(round(time_elapsed, 3)))
+    # print ('Solution!, with backtracks: ',nback)
+    # printBoard(board)
+    return board
