@@ -110,8 +110,6 @@ def getBoard(argv):
                 temp+=lines[y]
             temp = temp.replace(',', '')
             board = list(temp)
-    #print("Board")
-    #print(board)
     return [name, board]
 
 def makeNeighbors():
@@ -481,4 +479,4 @@ def main(argv=None):
     printBoard(board)
     writeBoard(argv,name,board)
 
-main()
+#main()
