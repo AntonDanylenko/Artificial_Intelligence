@@ -64,7 +64,7 @@ def generateFilled():
                 # time.sleep(.5)
             col+=1
         row+=1
-    sudoku_smart.printBoard(board)
+    # sudoku_smart.printBoard(board)
     return board
 
 def generatePuzzle(filledNum):
@@ -72,20 +72,46 @@ def generatePuzzle(filledNum):
     board = generateFilled()
     puzzle = board[:]
     tried_cell_list = []
-    while puzzle.count('_')<81-filledNum:
+    stack = MyStack2()
+    while puzzle.count('_')+filledNum<81:
+        if len(tried_cell_list)+filledNum>81:
+            cell_index, puzzle, tried_cell_list = stack.pop()
         cell_index = random.randint(0,80)
         if not cell_index in tried_cell_list:
             num = puzzle[cell_index]
             puzzle[cell_index] = '_'
             tried_cell_list.append(cell_index)
-            if not compBoards(sudoku_smart.execute(puzzle[:]),board[:]):
+            if compBoards(sudoku_smart.execute(puzzle[:]),board[:]):
+                stack.push([cell_index,puzzle,tried_cell_list])
+            else:
                 puzzle[cell_index] = num
     time_elapsed = sudoku_smart.time.time() - start_time
     print("Generation time: " + str(round(time_elapsed, 3)))
+    writeTime('output.txt',filledNum,round(time_elapsed,3))
     sudoku_smart.printBoard(puzzle)
     return puzzle
 
+def writeTime(filename,filledNum,time):
+    f = open(filename, "a")
+    f.write(str(filledNum) + ": " + str(time) + "\n")
+    f.close()
+
+def findAvgTime(filename,filledNum):
+    f = open(filename,"r")
+    df = f.read()
+    lines = df.split('\n')
+    f.close()
+    sum = 0
+    count = 0
+    for line in lines:
+        if line[0:2]==str(filledNum):
+            sum+=float(line[4:])
+            count+=1
+    return round(sum/count,3)
+
 # filled = generateFilled()
 # print(checkBoard(filled))
-# puzzle = generatePuzzle(24)
+for x in range(20):
+    puzzle = generatePuzzle(24)
+print(findAvgTime('output.txt',24))
 # sudoku_smart.printBoard(sudoku_smart.execute(puzzle))
